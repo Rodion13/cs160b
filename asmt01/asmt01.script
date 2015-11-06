@@ -1,0 +1,91 @@
+[ryaryy@hills cs160b]$ grep '^ryaryy:' /etc/passwd
+ryaryy:x:36501:506:Rodion:/students/ryaryy:/bin/bash
+
+[ryaryy@hills cs160b]$ echo $PATH
+/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/students/ryaryy/bin:.
+
+[ryaryy@hills cs160b]$ uptime
+ 17:52:51 up 79 days, 18:55, 59 users,  load average: 0.03, 0.06, 0.03
+
+[ryaryy@hills cs160b]$ last -2 $LOGNAME
+ryaryy   pts/23       50.185.68.85     Mon Nov  2 17:27   still logged in   
+ryaryy   pts/45       50.185.68.85     Mon Nov  2 15:54 - 17:27  (01:33)    
+
+wtmp begins Sun Nov  1 05:07:42 2015
+
+[ryaryy@hills cs160b]$ df
+Filesystem           1K-blocks     Used Available Use% Mounted on
+/dev/mapper/vg00-lv_root
+                      24639868  4669228  18712352  20% /
+tmpfs                 24707220  3215700  21491520  14% /dev/shm
+/dev/sda1               487652   117458    344594  26% /boot
+/dev/mapper/vg00-lv_home
+                       8125880   552460   7153992   8% /home
+/dev/mapper/vg00-lv_opt
+                      12254384  9297636   2327604  80% /opt
+/dev/mapper/vg00-lv_ora1
+                      32896880 17851984  13367176  58% /oracle
+/dev/mapper/vg00-lv_tmp
+                      10190136  1161072   8504776  13% /tmp
+/dev/mapper/vg00-lv_usr
+                      12254384  4965956   6659284  43% /usr
+/dev/mapper/vg00-lv_local
+                      31219684 23883228   5750364  81% /usr/local
+/dev/mapper/vg00-lv_var
+                      24639868  7528492  15853088  33% /var
+/dev/mapper/vg00-lv_spcwww
+                        487652   273478    188574  60% /spcwww
+/dev/mapper/vg00-lv_users
+                      22575612  8499836  12922344  40% /users
+/dev/mapper/vg01-lv_students
+                     254013044 90291988 150811284  38% /students
+
+
+[ryaryy@hills cs160b]$ aboutme
+Welocome ryaryy!
+Your host is hills.ccsf.cc.ca.us.
+Your last login were on: Mon Nov 2 18:45 still logged in
+You have 31 environment and 75 local variables defined.
+Your directories in the search path:
+/usr/lib64/qt-3.3/bin
+/usr/local/bin
+/bin
+/usr/bin
+/usr/local/sbin
+/usr/sbin
+/sbin
+/students/ryaryy/bin
+.
+Current 1-minute load average: 0.08
+System has been up for: 79 days
+Filesystem: /students
+Percentage of free space: 62%
+Avaliable megabites: 147227 MiB of free space on /students
+
+[ryaryy@hills cs160b]$ cd /boot
+[ryaryy@hills boot]$ /students/ryaryy/cs160b/aboutme
+Welocome ryaryy!
+Your host is hills.ccsf.cc.ca.us.
+Your last login were on: Mon Nov 2 18:45 still logged in
+You have 31 environment and 75 local variables defined.
+Your directories in the search path:
+/usr/lib64/qt-3.3/bin
+/usr/local/bin
+/bin
+/usr/bin
+/usr/local/sbin
+/usr/sbin
+/sbin
+/students/ryaryy/bin
+.
+Current 1-minute load average: 0.29
+System has been up for: 79 days
+Filesystem: /boot
+Percentage of free space: 74%
+Avaliable megabites: 336 MiB of free space on /boot
+[ryaryy@hills boot]$ 
+
+
+[ryaryy@hills cs160b]$ LOGNAME=  aboutme
+./aboutme: line 12: LOGNAME: cannot run since LOGNAME is empty!
+[ryaryy@hills cs160b]$ 

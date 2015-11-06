@@ -1,0 +1,110 @@
+gboyd@hills[asmt01]$ grep '^gboyd:' /etc/passwd
+gboyd:x:3496:208:Unix/Linux Guy,L462,use email,are you kidding?:/users/gboyd:/bin/bash
+gboyd@hills[asmt01]$ 
+gboyd@hills[asmt01]$ echo $PATH
+/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/users/gboyd/bin:.
+gboyd@hills[asmt01]$ 
+gboyd@hills[asmt01]$ uptime
+ 17:24:29 up 121 days, 23:01, 48 users,  load average: 0.16, 0.14, 0.11
+gboyd@hills[asmt01]$ 
+gboyd@hills[asmt01]$ last -2 $LOGNAME
+gboyd    pts/12                        Tue Oct 30 17:23   still logged in   
+gboyd    pts/40       c-76-103-51-76.h Tue Oct 30 17:21   still logged in   
+
+wtmp begins Wed Feb  1 05:19:15 2012
+gboyd@hills[asmt01]$ 
+gboyd@hills[asmt01]$ df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/vg00-lv_root
+                      24770940   1251572  22261080   6% /
+tmpfs                 24705488   3222760  21482728  14% /dev/shm
+/dev/sda1               495844     83239    387005  18% /boot
+/dev/mapper/vg00-lv_home
+                       8256952    691996   7145528   9% /home
+/dev/mapper/vg00-lv_logs
+                      12385456   2699560   9056752  23% /logs
+/dev/mapper/vg00-lv_opt
+                      12385456   3032276   8724036  26% /opt
+/dev/mapper/vg00-lv_ora1
+                      33027952  12125692  19224540  39% /oracle
+/dev/mapper/vg00-lv_ora2
+                      33027952    180152  31170080   1% /oratst
+/dev/mapper/vg00-lv_tmp
+                      10321208    231240   9565680   3% /tmp
+/dev/mapper/vg00-lv_usr
+                      12385456   3572296   8184016  31% /usr
+/dev/mapper/vg00-lv_local
+                      24770940   2424956  21087696  11% /usr/local
+/dev/mapper/vg00-lv_var
+                      24770940   3032932  20479720  13% /var
+/dev/mapper/vg01-lv_clubmail
+                       4128448    322744   3595992   9% /clubmail
+/dev/mapper/vg01-lv_spcwww
+                       4128448    414972   3503764  11% /spcwww
+/dev/mapper/vg01-lv_dbora0
+                      16513960   2449768  13225332  16% /orcl
+/dev/mapper/vg01-lv_dbora1
+                      49541936   5493316  41532040  12% /csora
+/dev/mapper/vg01-lv_users
+                      33027952   6935416  24414816  23% /users
+/dev/mapper/vg01-lv_students
+                     254144116  58285856 182948488  25% /students
+gboyd@hills[asmt01]$ 
+gboyd@hills[asmt01]$ # I have put aboutme in my PATH
+gboyd@hills[asmt01]$ aboutme
+Hello Unix/Linux Guy -
+You are logged into hills.ccsf.cc.ca.us
+You last logged on at 
+Tue Oct 30 17:21 still logged in
+You have 32 local and 32 environment variables defined
+
+The directories in your search path (in order) are:
+/usr/lib64/qt-3.3/bin
+/usr/local/bin
+/bin
+/usr/bin
+/usr/local/sbin
+/usr/sbin
+/sbin
+/users/gboyd/bin
+.
+
+Currently, the system load average (1-min) is 0.10
+It has been up 121 days, 23:01
+The filesystem you are currently on is /
+It is 94% free
+There are currently 21739 MiB of free space on /
+gboyd@hills[asmt01]$ 
+gboyd@hills[asmt01]$ cd /home
+gboyd@hills[home]$ aboutme
+Hello Unix/Linux Guy -
+You are logged into hills.ccsf.cc.ca.us
+You last logged on at 
+Tue Oct 30 17:21 still logged in
+You have 32 local and 32 environment variables defined
+
+The directories in your search path (in order) are:
+/usr/lib64/qt-3.3/bin
+/usr/local/bin
+/bin
+/usr/bin
+/usr/local/sbin
+/usr/sbin
+/sbin
+/users/gboyd/bin
+.
+
+Currently, the system load average (1-min) is 0.07
+It has been up 121 days, 23:01
+The filesystem you are currently on is /home
+It is 91% free
+There are currently 6978 MiB of free space on /home
+gboyd@hills[home]$ 
+gboyd@hills[home]$ LOGNAME=  aboutme
+/users/gboyd/bin/aboutme: line 5: LOGNAME: LOGNAME variable must be set to run aboutme
+gboyd@hills[home]$ 
+gboyd@hills[home]$ exit
+exit
+
+Script done on Tue 30 Oct 2012 05:25:26 PM PDT
+[ryaryy@hills asmt01]$ 

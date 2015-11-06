@@ -1,0 +1,55 @@
+#!/bin/bash
+##############################################
+# Name: Rodion Yaryy
+# Class: CS160B
+# Professor: Peter Wood
+# Date: 11/02/2015
+# File Name: asmt01.script
+# Description: Display information about the current user and the current system
+##############################################
+
+# Check if $LOGNAME and $PATH are empty and exist if they are
+log_name=${LOGNAME:?cannot run since LOGNAME is empty!}
+path=${PATH:?cannot run since PATH is empty }
+
+echo "Welocome $log_name!"
+echo "Your host is $HOSTNAME."
+
+# Get last login and current login
+login_last=$(last -2 $LOGNAME | head -n 2 | tail -1 | tr -s ' ' | cut -d' ' -f4-10) 
+login_current=$(last -2 $LOGNAME | head -n 1 | tr -s ' ' | cut -d' ' -f4-10)
+
+# if last login is empty, display current login information
+echo "Your last login were on: ${login_last:-$login_current}"
+
+# Environment / System / Local variables calculations 
+var_system=$(set | wc -l)
+var_env=$(env | wc -l | tr -s ' ')
+var_local=$(($var_system - $var_env))
+echo "You have $var_env environment and $var_local local variables defined."
+
+# Search Path
+echo "Your directories in the search path:"
+echo $PATH | tr ":" "\n"
+
+# Current 1 minute load time
+minute_time_avg=$(uptime | awk '{print $10}' | sed 's/,//g')
+echo "Current 1-minute load average: $minute_time_avg"
+
+# Display for how long system has been up to
+up_time=$(uptime | awk '{print $3, $4}' | sed 's/,//g')
+echo "System has been up for: $up_time"
+
+# Display file system
+file_system=$(df "$PWD" | tail -1 | rev | tr -s ' ' | cut -d' ' -f 1 | rev)
+echo "Filesystem: $file_system"
+
+# Display percentage of free space? 
+percentage_used_space=$(df "$PWD" | tail -1 | rev | cut -d' ' -f 2 | rev | sed 's/%//')
+percentage_free_space=$((100 - $percentage_used_space))
+echo "Percentage of free space: $percentage_free_space%"
+
+# Display how much space avaliable
+available_space=$(df "$PWD" | tail -1 | rev | cut -d' ' -f 4 | rev)
+megabites_free_space=$(($available_space / 1024))
+echo "Avaliable megabites: $megabites_free_space MiB of free space on $file_system"
