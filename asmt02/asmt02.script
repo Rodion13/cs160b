@@ -1,0 +1,33 @@
+[ryaryy@hills cs160b]$ chk -f
+  ERROR: Can't run chk -f. You have to run chk with two arguments: chk -u user_name | chk -f file_name
+
+[ryaryy@hills cs160b]$ chk -f chk
+  'chk' is a file.
+  It is readable, writable, and executable.
+
+[ryaryy@hills cs160b]$ chk -f .
+  '.' is a directory.
+  It is readable, writable, and executable.
+
+[ryaryy@hills cs160b]$ chk -f /dev/null
+  '/dev/null' is not a file, directory, or a symbolic link.
+  It is readable, writable, and not executable.
+
+[ryaryy@hills cs160b]$ chk -f something 
+  'something' is a symbolic link.
+  It is readable, writable, and executable.
+
+[ryaryy@hills cs160b]$ chk -f resume
+  ERROR: 'resume' does not exist
+
+[ryaryy@hills cs160b]$ chk -u pwood
+  Home directory of pwood is 
+  pwood is currently logged in.
+
+[ryaryy@hills cs160b]$ chk -u peter
+  ERROR: User 'peter' was not found on the system
+
+[ryaryy@hills cs160b]$ chk -d pwood
+  ERROR: First argument of chk must be -f or -u
+
+[ryaryy@hills cs160b]$ 

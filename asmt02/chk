@@ -1,0 +1,97 @@
+#!/bin/bash
+#
+# Name: Rodion Yaryy
+# Class: CS160B
+# Professor: Peter Wood
+# Date: 11/09/2015
+# File Name: chk
+# Description: Bash shell script that outputs information 
+#     about a particular file or user.
+#     This shell script must include two arguments: 
+#     ./chk ­-f filepath OR ./chk -u user.
+###########################################################
+
+program=$(basename $0)
+option=$1
+
+# Error handling for wrong number of arguments.
+if [ "$#" -ne 2 ] ; then
+  echo "  ERROR: Can't run $program $*. You have to run chk with two arguments: chk -u user_name | chk -f file_name" >&2
+  exit 1
+fi
+
+# Error handling for wrong option.
+# Only -u and -f are allowed.
+if  [[ "$option" != "-u" && "$option" != "-f" ]] ; then
+  echo -e "  ERROR: First argument of $program must be -f or -u" >&2
+  exit 1
+fi
+
+# User home directory and last login. 
+home_dir=$(grep "^$second:" /etc/passwd | cut -d: -f6)
+last_login=$(last -1 "$second" | head -n 1| tr -s ' ' | awk '{print $4 ", " $5 " " $6 " at " $7}')
+
+# User option 
+if [ "$option" == "-u" ] ; then
+  user=$2 #user variable
+
+  if ! grep -q "^$user:" /etc/passwd ; then
+    echo "  ERROR: User '$user' was not found on the system" >&2
+    exit 1
+  else
+    echo "  Home directory of $user is $home_dir"
+  fi
+
+  if who | grep -q "^$user" ; then
+    echo "  $user is currently logged in."
+    exit 0
+  else 
+    echo "  $user was last logged in on $lastlogdate at $last_login"
+  fi 
+
+fi
+
+# File option 
+if [ "$option" == "-f" ] ; then
+  object=$2 #some obejct variable 
+
+  # Determine whether object is a file, directory, symbolic link or doesn't exist
+  if [ ! -e "$object" ]; then
+    echo "  ERROR: '$object' does not exist"
+    exit 1
+  elif [ ! -L "$object" -a ! -e "$object" ]; then
+    error "  ERROR: '$object' does not exist and is not a symbolic link"
+    exit 1 
+  elif [ -h "$object" ] ; then
+    echo "  '$object' is a symbolic link."
+    exit 0
+  elif [ -f "$object" ] ; then
+    echo "  '$object' is a file."
+  elif [ -d "$object" ] ; then
+    echo "  '$object' is a directory."
+  else
+    echo "  '$object' is not a file, directory, or a symbolic link."
+  fi
+
+  # Decide whether or not file is readable, writable & executable. 
+  if [ -r "$object" ] ; then
+    perm1="readable"
+  else
+    perm1="not readable"
+  fi
+
+  if [ -w "$object" ] ; then
+     perm2="writable"
+  else
+     perm2="not writable"
+  fi
+
+  if [ -x "$object" ] ; then
+     perm3="executable"
+  else
+     perm3="not executable"
+  fi
+
+  echo "  It is $perm1, $perm2, and $perm3."
+  exit 0
+fi
