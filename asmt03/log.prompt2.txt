@@ -1,0 +1,10 @@
+Nov 29 17:23:45 PST 2015 | ryaryy | a | apple
+Nov 29 17:23:46 PST 2015 | ryaryy | a | apple
+Nov 29 17:23:49 PST 2015 | ryaryy | f | no match for such fruit found
+Nov 29 17:23:55 PST 2015 | ryaryy | orange | no match for such fruit found
+Nov 29 17:24:05 PST 2015 | ryaryy | apple | apple
+Nov 29 17:24:07 PST 2015 | ryaryy | q | exiting script
+Nov 29 17:24:21 PST 2015 | ryaryy | peach | peach
+Nov 29 17:24:23 PST 2015 | ryaryy | s | strawberry
+Nov 29 17:24:27 PST 2015 | ryaryy | lemon | lemon
+Nov 29 17:24:29 PST 2015 | ryaryy | quit | exiting script

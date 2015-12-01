@@ -1,0 +1,102 @@
+#!/bin/bash
+#
+# Name: Rodion Yaryy
+# Class: CS160B
+# Professor: Peter Wood
+# Date: 30/09/2015
+# File Name: head3
+# Description: Bash shell script that mimics Unix "head" command.
+#     This shell script can include include one argument, which is a file name, 
+#     and 3 different options: -c, -p num, -r   
+#     option -c is designed to display first line number in front of the line
+#     option -p is designed to display custom number of lines for the file
+#     option -r is designed to reverse the output of the file
+#     no options means 10 lines is going to get displayed
+#     Example: head3 [ -c ] [ -p num ] [ -r] filename 
+###########################################################
+
+#This function is designed for universal error handling
+error() {
+  echo "$(basename "$0"): ERROR - $*" >&2
+  echo "syntax: $(basename "$0") head3 [ -c ] [ -p num ] [ -r] filename" >&2
+  exit 1;  
+}
+
+# Exit if number of arguments is zero
+[ $# -eq 0 ] && error "not enough arguments";
+
+# Variables for files and flags for each option
+file=
+c_option=false
+p_option=false
+r_option=false
+num= 
+
+# Loop to go through each option one by one and if option is present
+# change corresponding flag value from true to false
+while [ $# -gt 0 ]; do
+  case "$1" in 
+    -p ) if [[ $2 =~ ^[0-9]*$ ]] ; then 
+           p_option=true
+           num=$2
+         else
+           error "p command must be followed by a number"    
+         fi  ;;
+    -c ) c_option=true;;
+    -r ) r_option=true;;
+    -* ) error "$1 is incorrect argument" ;;
+     * ) ! [ -e "${!#}" ] && error "file doesn't exist"
+         ! [ -r "${!#}" ] && error "'$1' is not a readable"
+         file="${!#}";; 
+  esac
+  shift
+done  
+
+#counter for the beginning of the file
+i=1
+
+#counter for the end of the file
+j=$(wc -l $file | tr -s ' ' | awk '{print $1}')
+
+
+
+#run cat or reverse of cat [tac] command depending on the value of the r-option flag
+cat_command="cat $file"
+if [[ $r_option == true ]] ; then
+  cat_command="tac $file"
+fi  
+
+
+#read the file line by line and handle each option accordingly 
+$cat_command | while read line
+do  
+
+  if [[ $c_option == true && $p_option == true ]] ; then    
+     if (( $i > $num )) ; then 
+       break 
+     else
+       [[ $r_option == true ]] && echo "line ${j}: ${line}" || echo "line ${i}: ${line}" 
+     fi       
+  
+  elif [[ $c_option == true ]] ; then  
+    if (( "${i}" > "10" )); then
+      break
+    else
+      [[ $r_option == true ]] && echo "line ${j}: ${line}" || echo "line ${i}: ${line}" 
+    fi 
+  
+  elif [[ $p_option == true ]] ; then    
+    if (( $i > $num )); then
+      break
+    fi
+     echo "${line}"   
+  else
+    if (( "${i}" > "10" )); then
+      break
+    fi
+    echo "${line}"; 
+  fi
+  (( i++ ))
+  (( j=j-1 )) 
+done 
+

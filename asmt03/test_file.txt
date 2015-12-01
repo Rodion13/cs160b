@@ -1,0 +1,7 @@
+line1
+line2
+bla3
+foo4
+foo5
+bla6
+line7

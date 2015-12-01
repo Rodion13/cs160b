@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+# Name: Rodion Yaryy
+# Class: CS160B
+# Professor: Peter Wood
+# Date: 30/09/2015
+# File Name: prompt2
+# Description: Bash shell script that asks user to select different fruits 
+#              and see quote about selected fruit as an output. 
+#              When user is done selecting fruits, he can quit and see the 
+#              list of all the fruits selected previously. 
+#              Script also tracks all user's inputs and stores it in the LOGFILE
+#              along with date and time for each input command.    
+###########################################################
+
+
+# Define log file name 
+LOGFILE="log.prompt2.txt"
+# User's LOGNAME 
+log_name=${LOGNAME}
+
+# variable for user's input
+name=""
+
+# variable to keep track of the list
+list=""
+
+# Loop to repeatedly ask the same question until quit or q is typed
+while true; do
+  echo -n "Which fruit quote would you like to hear?  (apple, lemon, peach, strawberry, quit): ";
+  read name; 
+  
+  # variable for full fruit name. It is needed for log file
+  fruit_name="no match for such fruit found"
+
+  # Different choices depending on user's input
+  case "$name" in
+     apple|a)
+        echo "'Millions saw the apple fall, but Newton asked why.' - Bernard Baruch"
+        list+="apple, "
+        fruit_name="apple"
+        ;;
+     lemon|l)
+        echo "'When life gives you lemons, sell them and buy a pineapple. How to better your life 101.' ― Davin Turney"
+        list+="lemon, "
+        fruit_name="lemon"
+        ;;
+     strawberry|s)  
+        echo "'I was able to preserve my integrity, in jars along with strawberries.' ― Jarod Kintz"
+        list+="strawberry, " 
+        fruit_name="strawberry"
+       ;;  
+     peach|p)
+        echo "'You can be the ripest peach in the world, and there's still going to be somebody who hates peaches.' ― Dita Von Teese"
+        list+="peach, "
+        fruit_name="peach"
+       ;;
+     quit|q)
+        #Adding data to log file when quit option is selected
+        date_time=$(date | cut -d' ' -f2-6)
+        echo "$date_time | $log_name | $name | exiting script" >> $LOGFILE
+        
+        # Handling empty list case on quit 
+        if [ -z "$list" ]; then
+          echo "Your have nothing in your list"
+        else  
+          echo "Your fruity list: ${list%??}."
+        fi  
+        break
+        ;;
+     *) echo "I have no quotes about $name in my directory."          
+  esac 
+  
+  # Adding data to the log file
+  date_time=$(date | cut -d' ' -f2-6)
+  echo "$date_time | $log_name | $name | $fruit_name" >> $LOGFILE
+done
