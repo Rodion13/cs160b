@@ -1,0 +1,21 @@
+[ryaryy@hills cs160b]$ myping -p 2 -h mit.edu xxx.ccsf.edu yahoo.com fog microsoft.com rodionmath.club google.com
+microsoft.com      2        packets  transmitted,  100%  packet  loss,
+xxx.ccsf.edu       unknown  host
+fog.ccsf.cc.ca.us  2        packets  transmitted,  0%    packet  loss,  0.193/0.200/0.208/0.016
+google.com         2        packets  transmitted,  0%    packet  loss,  3.934/3.992/4.051/0.086
+mit.edu            2        packets  transmitted,  0%    packet  loss,  4.000/4.125/4.250/0.125
+yahoo.com          2        packets  transmitted,  0%    packet  loss,  55.111/55.323/55.536/0.316
+rodionmath.club    2        packets  transmitted,  0%    packet  loss,  79.447/79.661/79.876/0.354
+
+[ryaryy@hills cs160b]$ myping
+myping: ERROR - not enough arguments
+syntax: myping myping  -p npack -h host1  [  host2   host3  ... ]
+
+[ryaryy@hills cs160b]$myping -p 3x -h fog
+myping: ERROR - -p should be followed by an integer
+syntax: myping myping  -p npack -h host1  [  host2   host3  ... ]
+
+[ryaryy@hills cs160b]$ myping -p x -h fog
+myping: ERROR - -p should be followed by an integer
+syntax: myping myping  -p npack -h host1  [  host2   host3  ... ]
+
