@@ -1,0 +1,82 @@
+#!/bin/bash
+##############################################
+# Name: Rodion Yaryy
+# Class: CS160B
+# Professor: Peter Wood
+# Date: 12/14/2015
+# File Name: myping
+# Description: Script that can run the "ping" command 
+#              for several hosts at once and filter its output. 
+#              This script is often called a "wrapper" script for ping.
+#              syntax: myping  -p npack -h host1  [  host2   host3  ... ] 
+##############################################
+
+
+#export custom $PATH variable
+export PATH=/bin:/usr/bin
+
+# This function is designed for universal usage handling. 
+usage() {
+  echo "syntax: $(basename "$0") myping  -p npack -h host1  [  host2   host3  ... ]" >&2
+  exit 1;  
+}
+
+# This is a function for better error handling
+error() {
+  echo "$(basename "$0"): ERROR - $*" >&2
+  usage  
+  exit 1;  
+}
+
+# Checking that there are more then 4 arguments
+[ "$#" -lt "4" ] && error "not enough arguments";
+
+while getopts “p:h:” opt
+do
+  case $opt in
+    p)
+      if ! [[ $OPTARG =~ ^-?[0-9]+$ ]] ; then 
+        error "-p should be followed by an integer"
+      else   
+         packages=$OPTARG 
+      fi
+      ;;   
+    h)
+      ;;
+    \?) 
+      usage ;;   
+   esac
+done
+
+# make temporary file
+file=$(mktemp tmp.XXXXXXXXXXXXXXX) 
+
+# After verifying that there are at least 4 arguments and that options are correct, 
+# I shift 3 arguments to get to the list of hosts 
+shift 3;
+
+# put content in the temporary file
+for i in $@; do 
+  (ping -c $packages -q $i | tail -3 | tr '\n' ' ') >>$file 2>>$file
+  echo ''>>$file
+done 
+
+
+# Display and sort output
+cat $file | while read line
+do
+   if [[ $line == *"rtt"* ]]; then  
+      echo $line | awk '{ print $2" "$6" "$7" "$8" "$11" "$12" "$13" "$19 }'
+   fi
+
+   if [[ $line == *"unknown host"* ]]; then
+      echo $line | awk '{ print $4 " unknown host"}' | tr ':' " "
+   fi
+
+   if [[ $line == *"100% packet lo"* ]]; then
+      echo $line | awk '{ print $2" "$6" "$7" "$8" "$11" "$12" "$13}'
+   fi  
+done | column -t |sort -k2 | sort -t'/' -k2 -g 
+
+# If bash crashes unexpectedly or when script is over - remove file
+trap "rm -f $file" EXIT
